@@ -4,14 +4,25 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="10" />
+        android:minSdkVersion="10"/>
 
     <application
+        android:name="com.cilinet.godutch.framework.application.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        <!-- 主入口 -->
+        <activity 
+            android:name="com.cilinet.godutch.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>
