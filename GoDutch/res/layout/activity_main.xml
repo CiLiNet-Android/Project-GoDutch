@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main">
+    
+    <!-- 顶部 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_title"
+        android:id="@+id/lyot_top">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:text="@string/WelcomeInfo"/>
+        
+    </RelativeLayout>
+    
+    <!-- 底部 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_bg"
+        android:id="@+id/lyot_bottom">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_big" 
+            android:id="@+id/vImg_BottomIcon"/>
+        
+        <TextView 
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"
+  			android:text="@string/WelcomeInfo"
+  			android:layout_toRightOf="@id/vImg_BottomIcon"
+  			android:textColor="@color/white"
+  			android:padding="4dp"
+  			android:layout_centerVertical="true" />
+        
+        <ImageView 
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"
+  			android:src="@drawable/main_btn"
+  			android:layout_alignParentRight="true"
+  			android:layout_marginRight="20dp"
+  			android:layout_centerVertical="true" />
+        
+    </RelativeLayout>
+    
+    <!-- 中部 -->
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lyot_top"
+        android:layout_above="@id/lyot_bottom">
+        
+        <GridView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:numColumns="3"
+	        android:layout_gravity="center_vertical"
+	        android:verticalSpacing="50dp"
+	        android:listSelector="@drawable/indexactivity_item_selector"
+	        android:id="@+id/grdV_index"/>
+        
+    </FrameLayout>
+
+</RelativeLayout>
