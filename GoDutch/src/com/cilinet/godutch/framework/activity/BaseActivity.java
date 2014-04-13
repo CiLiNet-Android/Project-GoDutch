@@ -3,6 +3,8 @@ package com.cilinet.godutch.framework.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 /**
@@ -19,8 +21,6 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
 	}
 
 	/**
@@ -41,6 +41,14 @@ public class BaseActivity extends Activity {
 	protected void startActivity(Class<?> classObj){
 		Intent _intent = new Intent(this,classObj);
 		super.startActivity(_intent);
+	}
+	
+	
+	/**
+	 * 加载布局文件
+	 */
+	protected View inflateView(int layoutResId){
+		return LayoutInflater.from(this).inflate(layoutResId, null);
 	}
 	
 }

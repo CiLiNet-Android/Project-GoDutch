@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main">
+    
+    <!-- 引入顶部区域 -->
+    <include layout="@layout/framework_top" android:id="@+id/framework_top"/>
+    
+    <!-- 引入底部 -->
+    <include layout="@layout/framework_bottom" android:id="@+id/framework_bottom"/>
+    
+    <!-- 中部 -->
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/framework_top"
+        android:layout_above="@id/framework_bottom"
+        android:id="@+id/framework_center">
+    </FrameLayout>
+    
+
+</RelativeLayout>

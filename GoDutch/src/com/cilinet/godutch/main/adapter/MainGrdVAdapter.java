@@ -14,25 +14,15 @@ import com.cilinet.godutch.R;
 
 public class MainGrdVAdapter extends BaseAdapter {
 	
-	private static class MainGrdVItem {
-		public int iconResId;
-		public int nameResId;
-		
-		public MainGrdVItem(int iconResId,int nameResId){
-			this.iconResId = iconResId;
-			this.nameResId = nameResId;
-		}
-	}
-	
-	private static ArrayList<MainGrdVItem> mMainGrdVItems;
+	private static ArrayList<MainGrdVAdapterItem> mMainGrdVItems;
 	static {
-		mMainGrdVItems = new ArrayList<MainGrdVAdapter.MainGrdVItem>();
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_payout, R.string.appGridTextPayoutAdd));
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_bill, R.string.appGridTextPayoutManage));
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_report, R.string.appGridTextStatisticsManage));
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_account_book, R.string.appGridTextAccountBookManage));	
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_category, R.string.appGridTextCategoryManage));
-		mMainGrdVItems.add(new MainGrdVItem(R.drawable.grid_user, R.string.appGridTextUserManage));
+		mMainGrdVItems = new ArrayList<MainGrdVAdapterItem>();
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_payout, R.string.appGridTextPayoutAdd));
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_bill, R.string.appGridTextPayoutManage));
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_report, R.string.appGridTextStatisticsManage));
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_account_book, R.string.appGridTextAccountBookManage));	
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_category, R.string.appGridTextCategoryManage));
+		mMainGrdVItems.add(new MainGrdVAdapterItem(R.drawable.grid_user, R.string.appGridTextUserManage));
 	}
 	
 	private Context mContext;
@@ -76,7 +66,7 @@ public class MainGrdVAdapter extends BaseAdapter {
 			_viewHolder = (ViewHolder)convertView.getTag();
 		}
 		
-		MainGrdVItem _mainGrdVItem = (MainGrdVItem)getItem(position);
+		MainGrdVAdapterItem _mainGrdVItem = (MainGrdVAdapterItem)getItem(position);
 		
 		_viewHolder.imgV_mainItemIcon.setImageResource(_mainGrdVItem.iconResId);
 		_viewHolder.txtV_mainItemName.setText(_mainGrdVItem.nameResId);

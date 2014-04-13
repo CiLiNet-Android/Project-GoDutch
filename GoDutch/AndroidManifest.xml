@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
         
+        <!-- 人员管理 -->
+        <activity android:name="com.cilinet.godutch.user.activity.UserActivity" />
+        
     </application>
 
 </manifest>
