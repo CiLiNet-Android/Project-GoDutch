@@ -41,6 +41,7 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 		grdV_main.setAdapter(new MainGrdVAdapter(this));
 		grdV_main.setOnItemClickListener(this);
 		
+		
 	}
 
 
@@ -65,6 +66,7 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 				super.handleMessage(msg);
 				
 				switch(msg.what){
+					//人员管理
 					case USER_MANAGE: {
 						_mainActivity.startActivity(UserActivity.class);
 						break;
