@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cilinet.godutch.R;
-import com.cilinet.godutch.category.CategoryActivity;
+import com.cilinet.godutch.category.activity.CategoryActivity;
 import com.cilinet.godutch.framework.activity.FrameActivity;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapter;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapterItem;

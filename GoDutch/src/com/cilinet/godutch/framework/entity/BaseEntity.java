@@ -1,8 +1,8 @@
-package com.cilinet.godutch.framework.model;
+package com.cilinet.godutch.framework.entity;
 
 import java.util.Date;
 
-public class BaseModel {
+public class BaseEntity {
 	
 	/** 模型的唯一标识 **/
 	public Integer id;

@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import android.content.Context;
 import android.test.AndroidTestCase;
 
-import com.cilinet.godutch.user.model.User;
+import com.cilinet.godutch.user.entity.User;
 
 
 

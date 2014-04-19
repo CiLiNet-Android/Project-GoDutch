@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.cilinet.godutch.framework.business.BaseBusiness;
 import com.cilinet.godutch.user.dal.UserDal;
-import com.cilinet.godutch.user.model.User;
+import com.cilinet.godutch.user.entity.User;
 
 public class UserBusiness extends BaseBusiness {
 	
