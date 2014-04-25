@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="InitDefaultUserName">
+        <item>张三</item>
+        <item>李四</item>
+    </string-array>
+    
+    <string-array name="SQLiteDALClassName">
+        <item>com.cilinet.godutch.user.dal.UserDal</item>
+        <item>com.cilinet.godutch.category.dal.CategoryDal</item>
+    </string-array>
+
+</resources>

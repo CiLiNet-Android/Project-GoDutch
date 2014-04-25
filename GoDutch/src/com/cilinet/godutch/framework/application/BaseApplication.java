@@ -15,6 +15,11 @@ import android.view.WindowManager;
 public class BaseApplication extends Application {
 	
 	/**
+	 * 调试标志位
+	 */
+	public static boolean IS_DEBUG = true;
+	
+	/**
 	 * 应用所在的手机屏幕的相关参数
 	 */
 	public static int appScreenWidth;

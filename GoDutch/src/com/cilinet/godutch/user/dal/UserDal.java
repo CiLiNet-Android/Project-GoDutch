@@ -1,16 +1,22 @@
 package com.cilinet.godutch.user.dal;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.cilinet.godutch.R;
+import com.cilinet.godutch.framework.application.BaseApplication;
 import com.cilinet.godutch.framework.dal.BaseDal;
 import com.cilinet.godutch.framework.dal.SqliteDataBaseOpenHelper.SQLiteTableOpenHelper;
 import com.cilinet.godutch.user.entity.User;
 
 public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
+	
+	private static final String TAG = "UserDal";
 	
 	/**
 	 * 表定义
@@ -28,18 +34,25 @@ public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
 	public UserDal(Context context){
 		super(context);
 	}
+	
+	/**
+	 * 禁用人员
+	 */
+	public boolean disableUser(int id){
+		return false;
+	}
+	
+	/**
+	 * 启用人员
+	 */
+	public boolean enableUser(int id){
+		return false;
+	}
 
 
 	@Override
 	public List<User> query(String whereSql) {
 		return null;
-	}
-
-
-	@Override
-	public boolean update(User model) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	@Override
@@ -75,8 +88,34 @@ public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String sql = "create table Userdfsdfs";
-		db.execSQL(sql);
+		StringBuilder _createTableScript = new StringBuilder();
+
+		_createTableScript.append("		Create  TABLE ").append(TABLE.NAME).append("(");
+		_createTableScript.append("				[").append(TABLE.COLUMN_ID).append("] integer PRIMARY KEY AUTOINCREMENT NOT NULL");
+		_createTableScript.append("				,[").append(TABLE.COLUMN_NAME).append("] varchar(10) NOT NULL");
+		_createTableScript.append("				,[").append(TABLE.COLUMN_CREATEDATE).append("] datetime NOT NULL");
+		_createTableScript.append("				,[").append(TABLE.COLUMN_STATE).append("] integer NOT NULL");
+		_createTableScript.append("				)");
+		
+		if(BaseApplication.IS_DEBUG){
+			Log.i(TAG, _createTableScript.toString());
+		}
+		
+		//创建表
+		db.execSQL(_createTableScript.toString());
+		
+		//初始化一些数据
+		initDefaultUsers(db);
+	}
+
+
+	private void initDefaultUsers(SQLiteDatabase db) {
+		String[] _userNames = getContext().getResources().getStringArray(R.array.InitDefaultUserName);
+		
+		for(String _userName : _userNames){
+			db.execSQL("INSERT INTO " + TABLE.NAME + "(" + TABLE.COLUMN_NAME + "," + TABLE.COLUMN_CREATEDATE + "," + TABLE.COLUMN_STATE + ") VALUES(?,?,?)", new Object[]{_userName,formatDate(new Date()),1});
+		}
+		
 	}
 
 

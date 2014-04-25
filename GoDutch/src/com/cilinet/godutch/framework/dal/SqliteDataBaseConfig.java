@@ -1,6 +1,11 @@
 package com.cilinet.godutch.framework.dal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
+
+import com.cilinet.godutch.R;
 
 /** 数据库级别的配置信息 
  * 
@@ -26,6 +31,13 @@ public class SqliteDataBaseConfig {
 		}
 		
 		return mSqliteDataBaseConfig;
+	}
+	
+	/** 
+	 * 数据库中有哪些表需要创建
+	 * 从资源文件中获得需要创建数据表的类名，然后将来通过反射来调用这些类的创建表的方法 **/
+	public String[] getSqliteDALClassNames(){
+		return mContext.getResources().getStringArray(R.array.SQLiteDALClassName);
 	}
 	
 	

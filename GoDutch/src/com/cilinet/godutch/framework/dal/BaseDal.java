@@ -57,6 +57,26 @@ public abstract class BaseDal<T> {
 		return _result > -1;
 	}
 	
+	/**
+	 * 开启事务
+	 */
+	public void beginTransaction(){
+		getSqLiteDatabase().beginTransaction();
+	}
+	
+	/**
+	 * 设置事务成功标志位
+	 */
+	public void setTransactionSuccessful(){
+		getSqLiteDatabase().setTransactionSuccessful();
+	}
+	
+	/**
+	 * 提交事务
+	 */
+	public void endTransaction(){
+		getSqLiteDatabase().endTransaction();
+	}
 	
 	/**
 	 * 查

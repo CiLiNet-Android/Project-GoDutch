@@ -1,9 +1,13 @@
 package com.cilinet.godutch.framework.dal;
 
+import java.lang.reflect.InvocationTargetException;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.cilinet.godutch.R;
+import com.cilinet.godutch.framework.utils.Reflection;
 import com.cilinet.godutch.user.dal.UserDal;
 
 public class SqliteDataBaseOpenHelper extends SQLiteOpenHelper {
@@ -26,7 +30,9 @@ public class SqliteDataBaseOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	public static interface SQLiteTableOpenHelper {
+		
 		public void onCreate(SQLiteDatabase db);
+		
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
 	}
 
@@ -35,8 +41,19 @@ public class SqliteDataBaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		SQLiteTableOpenHelper s = (SQLiteTableOpenHelper)new UserDal(mContext);
-		s.onCreate(db);
+		//1.从配置的资源中获取到子模块对应的Dal的完整类名
+		String[] _sqliteDALClassNames = SqliteDataBaseConfig.getInstance(mContext).getSqliteDALClassNames();
+		for(String _sqliteDALClassName : _sqliteDALClassNames){
+			try {
+				//3.通过类对象，创建类的实例
+				SQLiteTableOpenHelper _sQLiteTableOpenHelper = (SQLiteTableOpenHelper)Reflection.newInstance(_sqliteDALClassName, new Object[]{mContext}, new Class[]{Context.class});
+				
+				//4、调用这个实例的onCreate()
+				_sQLiteTableOpenHelper.onCreate(db);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

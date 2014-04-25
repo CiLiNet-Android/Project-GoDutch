@@ -4,11 +4,13 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.cilinet.godutch.category.entity.Category;
 import com.cilinet.godutch.framework.dal.BaseDal;
+import com.cilinet.godutch.framework.dal.SqliteDataBaseOpenHelper.SQLiteTableOpenHelper;
 
-public class CategoryDal extends BaseDal<Category> {
+public class CategoryDal extends BaseDal<Category> implements SQLiteTableOpenHelper {
 	
 	public CategoryDal(Context context) {
 		super(context);
@@ -45,6 +47,16 @@ public class CategoryDal extends BaseDal<Category> {
 	@Override
 	protected String getPKValue(Category entity) {
 		return String.valueOf(entity.id);
+	}
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		
 	}
 
 }
