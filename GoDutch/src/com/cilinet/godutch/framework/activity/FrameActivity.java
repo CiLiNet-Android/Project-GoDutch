@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.cilinet.godutch.R;
+import com.cilinet.godutch.framework.view.TopBarView;
 
 /**
  * Activity用到的业务方面的通用方法
@@ -15,16 +16,36 @@ import com.cilinet.godutch.R;
  * 
  */
 public class FrameActivity extends BaseActivity {
+	
+	/** 顶部标题栏 **/
+	private TopBarView mTopBarView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		//Activity标题栏
 		super.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//Activity支持的旋转方向
 		super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		super.setContentView(R.layout.framework);
+		
+		init();
 
+	}
+
+	private void init() {
+		initView();
+	}
+
+	private void initView() {
+		//初始化顶部标题栏
+		mTopBarView = new TopBarView(this);
+	}
+	
+	protected TopBarView getTopBarView(){
+		return mTopBarView;
 	}
 
 	protected void appendCenterView(int layoutResId) {

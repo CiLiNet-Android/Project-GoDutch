@@ -4,10 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <!-- 中间要显示的内容 -->
-    <TextView 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UserActivity"/>
+    <ListView 
+        android:id="@+id/listV_user"
+        style="@style/CommonListView"/>"
 
 </LinearLayout>

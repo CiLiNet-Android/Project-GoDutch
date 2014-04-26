@@ -2,13 +2,17 @@ package com.cilinet.godutch.framework.dal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import com.cilinet.godutch.framework.application.BaseApplication;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * 主要的作用，就是跟数据库进行交互，将模型封装的数据存入到对应的表中
@@ -17,6 +21,8 @@ import android.database.sqlite.SQLiteDatabase;
  * @param <T>
  */
 public abstract class BaseDal<T> {
+	
+	private static final String TAG = "BaseDal";
 	
 	private Context mContext;
 	
@@ -79,9 +85,25 @@ public abstract class BaseDal<T> {
 	}
 	
 	/**
-	 * 查
+	 * 查(包含Where)
 	 */
-	public abstract List<T> query(String whereSql);
+	public ArrayList<T> query(String whereSql){
+		StringBuilder _sql = new StringBuilder("SELECT * FROM " + getTableName());
+		if(null != whereSql && !"".equals(whereSql)){
+			_sql.append(" ").append(whereSql);
+		}
+		
+		if(BaseApplication.IS_DEBUG){
+			Log.i(TAG, _sql.toString());
+		}
+		
+		Cursor _cursor = getSqLiteDatabase().rawQuery(_sql.toString(), null);
+		
+		return cursorToList(_cursor);
+		
+	}
+	
+	protected abstract ArrayList<T> cursorToList(Cursor cursor);
 	
 	
 	/**

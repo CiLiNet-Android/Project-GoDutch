@@ -1,9 +1,11 @@
 package com.cilinet.godutch.category.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.cilinet.godutch.category.entity.Category;
@@ -22,11 +24,6 @@ public class CategoryDal extends BaseDal<Category> implements SQLiteTableOpenHel
 		public static final String COLUMN_NAME = "name";
 		public static final String COLUMN_STATE = "state";
 		public static final String COLUMN_CREATEDATE = "createDate";
-	}
-
-	@Override
-	public List<Category> query(String whereSql) {
-		return null;
 	}
 
 	@Override
@@ -57,6 +54,12 @@ public class CategoryDal extends BaseDal<Category> implements SQLiteTableOpenHel
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		
+	}
+
+	@Override
+	protected ArrayList<Category> cursorToList(Cursor cursor) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
