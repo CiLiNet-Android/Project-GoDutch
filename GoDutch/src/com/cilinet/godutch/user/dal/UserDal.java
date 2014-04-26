@@ -1,10 +1,12 @@
 package com.cilinet.godutch.user.dal;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -36,23 +38,17 @@ public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
 	}
 	
 	/**
-	 * 禁用人员
+	 * 切换人员的状态
 	 */
-	public boolean disableUser(int id){
-		return false;
-	}
-	
-	/**
-	 * 启用人员
-	 */
-	public boolean enableUser(int id){
-		return false;
-	}
-
-
-	@Override
-	public List<User> query(String whereSql) {
-		return null;
+	public boolean updateStateById(int id,int state){
+		ContentValues _contVals = new ContentValues();
+		_contVals.put(TABLE.COLUMN_STATE, state);
+		
+		String _whereClause = TABLE.COLUMN_ID + "=?";
+		
+		int _result = getSqLiteDatabase().update(TABLE.NAME, _contVals, _whereClause, new String[]{String.valueOf(id)});
+		
+		return _result > -1;
 	}
 	
 	@Override
@@ -124,6 +120,22 @@ public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
 		
 	}
 
+	@Override
+	protected ArrayList<User> cursorToList(Cursor cursor) {
+		ArrayList<User> _users = new ArrayList<User>();
+		
+		while(cursor.moveToNext()){
+			User _user = new User();
+			
+			_user.id = cursor.getInt(cursor.getColumnIndex(TABLE.COLUMN_ID));
+			_user.name = cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_NAME));
+			_user.createDate = parseDate(cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_CREATEDATE)));
+			_user.state = cursor.getInt(cursor.getColumnIndex(TABLE.COLUMN_STATE));
+			
+			_users.add(_user);
+		}
+		
+		return _users;
+	}
 
-	
 }

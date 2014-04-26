@@ -1,5 +1,7 @@
 package com.cilinet.godutch.user.business;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 
 import com.cilinet.godutch.framework.business.BaseBusiness;
@@ -23,17 +25,25 @@ public class UserBusiness extends BaseBusiness {
 	}
 	
 	/**
+	 * 查看人员
+	 */
+	public ArrayList<User> queryAllUsers(){
+		String _whereSql = "WHERE state=1";
+		return mUserDal.query(_whereSql);
+	}
+	
+	/**
 	 * 禁用人员
 	 */
 	public boolean disableUser(int userId){
-		return false;
+		return mUserDal.updateStateById(userId, 0);
 	}
 	
 	/**
 	 * 启用人员
 	 */
 	public boolean enableUser(int userId){
-		return false;
+		return mUserDal.updateStateById(userId, 1);
 	}
 
 }

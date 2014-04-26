@@ -5,14 +5,13 @@ import java.lang.ref.WeakReference;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.sax.StartElementListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cilinet.godutch.R;
-import com.cilinet.godutch.category.activity.CategoryActivity;
 import com.cilinet.godutch.framework.activity.FrameActivity;
+import com.cilinet.godutch.framework.view.TopBarView;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapter;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapterItem;
 import com.cilinet.godutch.user.activity.UserActivity;
@@ -37,11 +36,17 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 
 
 	private void initView() {
+		//顶部
+		TopBarView _topBarView = getTopBarView();
+		_topBarView.setTitle(getString(R.string.WelcomeInfo));
+		_topBarView.hideBackBtn();
+		
+		//中部
 		grdV_main = (GridView)findViewById(R.id.grdV_main);
 		grdV_main.setAdapter(new MainGrdVAdapter(this));
 		grdV_main.setOnItemClickListener(this);
 		
-		
+		//底部
 	}
 
 
