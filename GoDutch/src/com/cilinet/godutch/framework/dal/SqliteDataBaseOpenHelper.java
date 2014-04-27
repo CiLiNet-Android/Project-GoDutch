@@ -1,14 +1,9 @@
 package com.cilinet.godutch.framework.dal;
 
-import java.lang.reflect.InvocationTargetException;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.utils.Reflection;
-import com.cilinet.godutch.user.dal.UserDal;
 
 public class SqliteDataBaseOpenHelper extends SQLiteOpenHelper {
 	

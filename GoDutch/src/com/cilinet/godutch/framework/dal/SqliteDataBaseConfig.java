@@ -1,8 +1,5 @@
 package com.cilinet.godutch.framework.dal;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 
 import com.cilinet.godutch.R;

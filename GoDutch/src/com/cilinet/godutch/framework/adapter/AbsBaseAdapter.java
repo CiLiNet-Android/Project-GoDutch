@@ -13,6 +13,10 @@ public abstract class AbsBaseAdapter<T> extends android.widget.BaseAdapter {
 	
 	private Context mContext;
 	
+	protected ArrayList<T> getmBoundData() {
+		return mBoundData;
+	}
+
 	public AbsBaseAdapter(ArrayList<T> boundData,Context context){
 		mBoundData = boundData;
 		mContext = context;
