@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.cilinet.godutch.R;
+import com.cilinet.godutch.framework.view.BotmSlideMenuView;
 import com.cilinet.godutch.framework.view.TopBarView;
 
 /**
@@ -19,6 +20,9 @@ public class FrameActivity extends BaseActivity {
 	
 	/** 顶部标题栏 **/
 	private TopBarView mTopBarView;
+	
+	/** 底部滑动控件 **/
+	private BotmSlideMenuView mBotmSlideMenuView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class FrameActivity extends BaseActivity {
 	private void initView() {
 		//初始化顶部标题栏
 		mTopBarView = new TopBarView(this);
+		
+		mBotmSlideMenuView = new BotmSlideMenuView(this);
 	}
 	
 	protected TopBarView getTopBarView(){

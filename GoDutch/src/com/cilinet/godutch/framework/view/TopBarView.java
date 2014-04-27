@@ -24,6 +24,7 @@ public class TopBarView implements View.OnClickListener{
 	private Activity mActivity;
 	
 	public TopBarView(Activity activity){
+		mActivity = activity;
 		framework_top = (RelativeLayout)activity.findViewById(R.id.framework_top);
 		
 		initView();

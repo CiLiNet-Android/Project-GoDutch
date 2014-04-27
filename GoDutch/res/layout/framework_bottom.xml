@@ -1,35 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 底部 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lyot_bottom"
     android:layout_width="match_parent"
-    android:layout_height="68dp"
-    android:layout_alignParentBottom="true"
-    android:background="@drawable/bottom_bg" >
+    android:layout_height="wrap_content" 
+    android:layout_alignParentBottom="true">
 
-    <ImageView
-        android:id="@+id/vImg_BottomIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/icon_big" />
+    <RelativeLayout
+        android:id="@+id/lyot_botmBtnBar"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@drawable/bottom_bg" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/vImg_BottomIcon"
-        android:padding="4dp"
-        android:text="@string/WelcomeInfo"
-        android:textColor="@color/white" />
+        <ImageView
+            android:id="@+id/vImg_BottomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_big" />
 
-    <ImageView
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/vImg_BottomIcon"
+            android:padding="4dp"
+            android:text="@string/WelcomeInfo"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/main_btn" />
+    </RelativeLayout>
+    
+    <!-- 底部滑动菜单 -->
+    <FrameLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/main_btn" />
+        android:layout_below="@id/lyot_botmBtnBar">
+        
+        <ListView 
+            android:id="@+id/listV_botmSlideMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        
+    </FrameLayout>
 
 </RelativeLayout>

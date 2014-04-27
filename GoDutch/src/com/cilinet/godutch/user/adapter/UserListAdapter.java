@@ -32,7 +32,7 @@ public class UserListAdapter extends AbsBaseAdapter<User>{
 			_holder = (ViewHolder)convertView.getTag();
 		}
 		
-		User _user = getmBoundData().get(position);
+		User _user = getBoundData().get(position);
 		_holder.imgV_userImg.setImageResource(R.drawable.user_big_icon);
 		_holder.txtV_userName.setText(_user.name);
 		

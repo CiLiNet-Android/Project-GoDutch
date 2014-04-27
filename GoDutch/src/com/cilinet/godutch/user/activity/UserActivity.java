@@ -40,17 +40,12 @@ public class UserActivity extends FrameActivity {
 
 	private void initView(){
 		
-		//顶部
-		TopBarView _topBarView = new TopBarView(this);
-	//	_topBarView.setTitle(getString(R.string.appGridTextUserManage) + "(" + ")");
-		
 		listV_user = (ListView)findViewById(R.id.listV_user);
 		ArrayList<User> _boundData = mUserBusiness.queryAllUsers();
 		mUserListAdapter = new UserListAdapter(_boundData, this);
 		listV_user.setAdapter(mUserListAdapter);
 		
-		
-		_topBarView.setTitle(getString(R.string.appGridTextUserManage) + "(" + String.valueOf( _boundData.size() ) + ")");
+		getTopBarView().setTitle(getString(R.string.appGridTextUserManage) + "(" + String.valueOf( _boundData.size()) + ")");
 	}
 
 }
