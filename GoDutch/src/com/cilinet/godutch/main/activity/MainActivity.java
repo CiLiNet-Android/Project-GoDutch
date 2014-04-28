@@ -26,6 +26,8 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 
 		appendCenterView(R.layout.activity_main);
 		
+		bindSlideMenuItems(R.array.SlideMenuActivityMain);
+		
 		init();
 	}
 

@@ -7,7 +7,6 @@ import android.widget.ListView;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.activity.FrameActivity;
-import com.cilinet.godutch.framework.view.TopBarView;
 import com.cilinet.godutch.user.adapter.UserListAdapter;
 import com.cilinet.godutch.user.business.UserBusiness;
 import com.cilinet.godutch.user.entity.User;
@@ -24,6 +23,8 @@ public class UserActivity extends FrameActivity {
 		super.onCreate(savedInstanceState);
 		
 		appendCenterView(R.layout.activity_user);
+		
+		bindSlideMenuItems(R.array.SlideMenuUser);
 		
 		init();
 	}

@@ -65,5 +65,12 @@ public class FrameActivity extends BaseActivity {
 
 		framework_center.addView(_view, _layoutParams);
 	}
+	
+	/**
+	 * 绑定滑动菜单项
+	 */
+	protected void bindSlideMenuItems(int slideMenuItemsResId){
+		mBotmSlideMenuView.bindSlideItems(slideMenuItemsResId);
+	}
 
 }

@@ -2,7 +2,7 @@
 <!-- 底部 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
+    android:layout_height="68dp" 
     android:layout_alignParentBottom="true">
 
     <RelativeLayout
@@ -40,13 +40,12 @@
     <!-- 底部滑动菜单 -->
     <FrameLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/lyot_botmBtnBar">
         
         <ListView 
             android:id="@+id/listV_botmSlideMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            style="@style/CommonListView"/>
         
     </FrameLayout>
 

@@ -4,20 +4,26 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.adapter.AbsBaseAdapter;
+import com.cilinet.godutch.framework.utils.UnitTransformUtil;
 
 /**
  * 底部滑动菜单
  * @author zhxl
  *
  */
-public class BotmSlideMenuView implements View.OnClickListener{
+public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListener{
+	
+	private static final String TAG = "BotmSlideMenuView";
 	
 	private RelativeLayout framework_bottom;
 	
@@ -32,14 +38,23 @@ public class BotmSlideMenuView implements View.OnClickListener{
 	public BotmSlideMenuView(Activity activity){
 		mActivity = activity;
 		
-		framework_bottom = (RelativeLayout)mActivity.findViewById(R.id.framework_bottom);
-		
 		init();
 	}
 	
 	private void init() {
 		initVariables();
 		initView();	
+		initSlideMenu();
+	}
+
+	private void initSlideMenu() {
+		lyot_botmBtnBar = (RelativeLayout)findViewById(R.id.lyot_botmBtnBar);
+		lyot_botmBtnBar.setOnClickListener(this);
+		
+		lyot_botmBtnBar.setFocusableInTouchMode(true);
+		lyot_botmBtnBar.setOnKeyListener(this);
+		
+		listV_botmSlideMenu = (ListView)findViewById(R.id.listV_botmSlideMenu);
 	}
 
 	private void initVariables() {
@@ -47,11 +62,8 @@ public class BotmSlideMenuView implements View.OnClickListener{
 	}
 
 	private void initView() {
-		lyot_botmBtnBar = (RelativeLayout)findViewById(R.id.lyot_botmBtnBar);
-		lyot_botmBtnBar.setOnClickListener(this);
+		framework_bottom = (RelativeLayout)mActivity.findViewById(R.id.framework_bottom);
 		
-		listV_botmSlideMenu = (ListView)findViewById(R.id.listV_botmSlideMenu);
-
 	}
 
 	private View findViewById(int id){
@@ -81,7 +93,7 @@ public class BotmSlideMenuView implements View.OnClickListener{
 	}
 	
 	private void slideDown(){
-		RelativeLayout.LayoutParams _layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams _layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UnitTransformUtil.dip2px(mActivity, 68));
 		_layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		
 		framework_bottom.setLayoutParams(_layoutParams);
@@ -107,7 +119,7 @@ public class BotmSlideMenuView implements View.OnClickListener{
 		}
 	}
 	
-	public void bindItems(int menuItemsResId){
+	public void bindSlideItems(int menuItemsResId){
 		String[] _itemsTitle = mActivity.getResources().getStringArray(menuItemsResId);
 		
 		ArrayList<SlideMenuItem> _slideMenuItems = new ArrayList<SlideMenuItem>();
@@ -115,7 +127,7 @@ public class BotmSlideMenuView implements View.OnClickListener{
 			_slideMenuItems.add(new SlideMenuItem(i, _itemsTitle[i]));
 		}
 		
-		
+		listV_botmSlideMenu.setAdapter(new SlideMenuAdapter(_slideMenuItems,mActivity));
 	}
 	
 	private class SlideMenuAdapter extends AbsBaseAdapter<SlideMenuItem> {
@@ -123,15 +135,40 @@ public class BotmSlideMenuView implements View.OnClickListener{
 		public SlideMenuAdapter(ArrayList<SlideMenuItem> boundData,
 				Context context) {
 			super(boundData, context);
-			
-			
 		}
 
+		private class ViewHolder {
+			public TextView txtV_slideMenuItemTitle;
+		}
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			return null;
+			ViewHolder _viewHolder = null;
+			if(null == convertView){
+				convertView = (View)LayoutInflater.from(mActivity).inflate(R.layout.botm_slidemenu_item, null);
+				
+				_viewHolder = new ViewHolder();
+				_viewHolder.txtV_slideMenuItemTitle = (TextView)convertView.findViewById(R.id.txtV_slideMenuItemTitle);
+				
+				convertView.setTag(_viewHolder);
+			}else {
+				_viewHolder = (ViewHolder)convertView.getTag();
+			}
+			
+			SlideMenuItem _slideMenuItem = (SlideMenuItem)getItem(position);
+			_viewHolder.txtV_slideMenuItemTitle.setText(_slideMenuItem.title);
+			
+			return convertView;
 		}
 
+	}
+
+	@Override
+	public boolean onKey(View v, int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_UP){
+			slide();
+		}
+		return false;
 	}
 
 }
