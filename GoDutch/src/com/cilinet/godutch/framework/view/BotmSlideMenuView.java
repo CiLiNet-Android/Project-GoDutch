@@ -8,9 +8,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.adapter.AbsBaseAdapter;
@@ -21,7 +24,7 @@ import com.cilinet.godutch.framework.utils.UnitTransformUtil;
  * @author zhxl
  *
  */
-public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListener{
+public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListener,OnItemClickListener{
 	
 	private static final String TAG = "BotmSlideMenuView";
 	
@@ -44,7 +47,15 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 	private void init() {
 		initVariables();
 		initView();	
-		initSlideMenu();
+		
+		if(mActivity instanceof OnSlideMenuItemClickListener){
+			/**
+			 * 给btomBtnBar注册了点击事件
+			 * 菜单ListView初始化
+			 */
+			initSlideMenu();
+		}
+		
 	}
 
 	private void initSlideMenu() {
@@ -55,6 +66,7 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		lyot_botmBtnBar.setOnKeyListener(this);
 		
 		listV_botmSlideMenu = (ListView)findViewById(R.id.listV_botmSlideMenu);
+		listV_botmSlideMenu.setOnItemClickListener(this);
 	}
 
 	private void initVariables() {
@@ -75,7 +87,7 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		slide();
 	}
 	
-	private void slide(){
+	public void slide(){
 		if(!mIsSlideUp){
 			slideUp();
 		}else {
@@ -109,7 +121,7 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 	}
 	
 	/** 滑动菜单项 **/
-	private class SlideMenuItem {
+	public static class SlideMenuItem {
 		public int id;
 		public String title; 
 		
@@ -130,7 +142,7 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		listV_botmSlideMenu.setAdapter(new SlideMenuAdapter(_slideMenuItems,mActivity));
 	}
 	
-	private class SlideMenuAdapter extends AbsBaseAdapter<SlideMenuItem> {
+	private static class SlideMenuAdapter extends AbsBaseAdapter<SlideMenuItem> {
 
 		public SlideMenuAdapter(ArrayList<SlideMenuItem> boundData,
 				Context context) {
@@ -145,7 +157,7 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder _viewHolder = null;
 			if(null == convertView){
-				convertView = (View)LayoutInflater.from(mActivity).inflate(R.layout.botm_slidemenu_item, null);
+				convertView = (View)LayoutInflater.from(getContext()).inflate(R.layout.botm_slidemenu_item, null);
 				
 				_viewHolder = new ViewHolder();
 				_viewHolder.txtV_slideMenuItemTitle = (TextView)convertView.findViewById(R.id.txtV_slideMenuItemTitle);
@@ -170,5 +182,22 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		}
 		return false;
 	}
+	
+	public static interface OnSlideMenuItemClickListener{
+		public void onSlideMenuItemClick(View view,SlideMenuItem slideMenuItem);
+	}
 
+	
+	private OnSlideMenuItemClickListener mOnSlideMenuItemClickListener;
+	public void setOnSlideMenuItemClickListener(OnSlideMenuItemClickListener listener){
+		mOnSlideMenuItemClickListener = listener;
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		SlideMenuItem _slideMenuItem = (SlideMenuItem)parent.getAdapter().getItem(position);
+		
+		mOnSlideMenuItemClickListener.onSlideMenuItemClick(view,_slideMenuItem);
+	}
+	
 }

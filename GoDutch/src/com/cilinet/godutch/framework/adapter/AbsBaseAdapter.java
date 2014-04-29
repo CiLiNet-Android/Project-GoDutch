@@ -43,5 +43,9 @@ public abstract class AbsBaseAdapter<T> extends android.widget.BaseAdapter {
 	protected View inflateView(int layoutResId){
 		return LayoutInflater.from(mContext).inflate(layoutResId, null);
 	}
+	
+	protected Context getContext(){
+		return mContext;
+	}
 
 }

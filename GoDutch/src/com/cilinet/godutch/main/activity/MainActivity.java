@@ -11,12 +11,14 @@ import android.widget.GridView;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.activity.FrameActivity;
+import com.cilinet.godutch.framework.view.BotmSlideMenuView;
+import com.cilinet.godutch.framework.view.BotmSlideMenuView.SlideMenuItem;
 import com.cilinet.godutch.framework.view.TopBarView;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapter;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapterItem;
 import com.cilinet.godutch.user.activity.UserActivity;
 
-public class MainActivity extends FrameActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends FrameActivity implements AdapterView.OnItemClickListener,BotmSlideMenuView.OnSlideMenuItemClickListener{
 	
 	private GridView grdV_main;
 
@@ -106,6 +108,12 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 				break;
 			}
 		}
+	}
+
+
+	@Override
+	public void onSlideMenuItemClick(View view, SlideMenuItem slideMenuItem) {
+		
 	}
 
 }

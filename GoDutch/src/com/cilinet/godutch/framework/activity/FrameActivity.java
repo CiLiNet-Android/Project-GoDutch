@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView;
+import com.cilinet.godutch.framework.view.BotmSlideMenuView.OnSlideMenuItemClickListener;
 import com.cilinet.godutch.framework.view.TopBarView;
 
 /**
@@ -71,6 +72,17 @@ public class FrameActivity extends BaseActivity {
 	 */
 	protected void bindSlideMenuItems(int slideMenuItemsResId){
 		mBotmSlideMenuView.bindSlideItems(slideMenuItemsResId);
+	}
+	
+	/**
+	 * 设置BotmSlideMenuView的点击事件委托者
+	 */
+	protected void bindSlideMenuItemsClickListener(OnSlideMenuItemClickListener listener){
+		mBotmSlideMenuView.setOnSlideMenuItemClickListener(listener);
+	}
+	
+	protected BotmSlideMenuView getBotmSlideMenuView() {
+		return mBotmSlideMenuView;
 	}
 
 }
