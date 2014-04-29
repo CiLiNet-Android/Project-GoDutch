@@ -8,9 +8,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.adapter.AbsBaseAdapter;
@@ -21,7 +24,7 @@ import com.cilinet.godutch.framework.utils.UnitTransformUtil;
  * @author zhxl
  *
  */
-public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListener{
+public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListener,OnItemClickListener{
 	
 	private static final String TAG = "BotmSlideMenuView";
 	
@@ -128,6 +131,9 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 		}
 		
 		listV_botmSlideMenu.setAdapter(new SlideMenuAdapter(_slideMenuItems,mActivity));
+		
+		listV_botmSlideMenu.setOnItemClickListener(this);
+		
 	}
 	
 	private class SlideMenuAdapter extends AbsBaseAdapter<SlideMenuItem> {
@@ -169,6 +175,15 @@ public class BotmSlideMenuView implements View.OnClickListener,View.OnKeyListene
 			slide();
 		}
 		return false;
+	}
+
+	/** Items的点击事件 **/
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		SlideMenuItem _slideMenuItem = (SlideMenuItem) parent.getAdapter().getItem(position);
+		if(position == _slideMenuItem.id){
+			Toast.makeText(mActivity, _slideMenuItem.title, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }
