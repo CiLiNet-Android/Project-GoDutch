@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.adapter.AbsBaseAdapter;
