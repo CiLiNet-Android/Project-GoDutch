@@ -20,13 +20,15 @@ public class UserListAdapter extends AbsBaseAdapter<User>{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
 		ViewHolder _holder;
 		if(null == convertView){
 			_holder = new ViewHolder();
 			convertView = inflateView(R.layout.user_listview_item);
+			
 			_holder.imgV_userImg = (ImageView) convertView.findViewById(R.id.imgV_userImg);
 			_holder.txtV_userName = (TextView) convertView.findViewById(R.id.txtV_userName);
+			_holder.txtV_userState = (TextView) convertView.findViewById(R.id.txtV_userState);
+			
 			convertView.setTag(_holder);
 		}else{
 			_holder = (ViewHolder)convertView.getTag();
@@ -35,6 +37,7 @@ public class UserListAdapter extends AbsBaseAdapter<User>{
 		User _user = getBoundData().get(position);
 		_holder.imgV_userImg.setImageResource(R.drawable.user_big_icon);
 		_holder.txtV_userName.setText(_user.name);
+		_holder.txtV_userState.setText(_user.getState());
 		
 		return convertView;
 	}
@@ -42,6 +45,7 @@ public class UserListAdapter extends AbsBaseAdapter<User>{
 	private class ViewHolder{
 		public ImageView imgV_userImg;
 		public TextView txtV_userName;
+		public TextView txtV_userState;
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.cilinet.godutch.user.activity;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.cilinet.godutch.R;
 import com.cilinet.godutch.framework.activity.FrameActivity;
+import com.cilinet.godutch.framework.utils.RegexTools;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView.SlideMenuItem;
 import com.cilinet.godutch.user.adapter.UserListAdapter;
@@ -78,68 +79,28 @@ public class UserActivity extends FrameActivity implements
 			this.edTxt_userName = edTxt_userName;
 		}
 
-		/**
-		 * 保持Dialog不自动关闭
-		 * @param dialog
-		 */
-		private void keepDialog(DialogInterface dialog) {
-			try {
-				Field field = dialog.getClass().getSuperclass()
-						.getDeclaredField("mShowing");
-				field.setAccessible(true);
-				field.set(dialog, false);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		/**
-		 *  关闭Dialog
-		 * @param dialog
-		 */
-		private void destroyDialog(DialogInterface dialog) {
-			try {
-				Field field = dialog.getClass().getSuperclass()
-						.getDeclaredField("mShowing");
-				field.setAccessible(true);
-				field.set(dialog, true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			dialog.cancel();
-		}
 
 		/**
 		 *  校验新建的用户名
 		 */
-		private void verifyNewUserName(DialogInterface dialog) {
-			String addName = edTxt_userName.getText().toString().trim();
+		private boolean validateUserName(String userName){
+			String _userName = edTxt_userName.getText().toString().trim();
+			
+			boolean _validateResult = true;
 
-			/**
-			 * 用户名重复则提示“该用户名已存在...”
-			 */
-			ArrayList<User> _userData = mUserBusiness.queryUsers();
-			for (int i = 0; i < _userData.size(); i++) {
-				User user = _userData.get(i);
-				if (user.name.equals(addName)) {
-					showToast("该用户名已存在...");
-					keepDialog(dialog);
-					return;
-				}
-			}
-
-			/**
-			 * 用户名只能由英文、中文和数字组成......
-			 */
-			if (addName.matches("[a-zA-Z0-9\u4e00-\u9fa5]+")) {
-				showToast(addName);
-				destroyDialog(dialog);
-			} else {
+			//用户名只能由英文、中文和数字组成......
+			if(!RegexTools.isChineseEnglishNum(_userName)){
 				showToast("用户名只能由英文、中文和数字组成......");
-				keepDialog(dialog);
+				_validateResult = false;
 			}
 			
-			// showToast("测试代码...");
+			//用户名重复则提示“该用户名已存在...”
+			if(mUserBusiness.checkNameIfExists(_userName)){
+				showToast("该用户名已存在...");
+				_validateResult = false;
+			}
+
+			return _validateResult;
 		}
 
 		
@@ -148,15 +109,27 @@ public class UserActivity extends FrameActivity implements
 		 */
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
+			AlertDialog _dialog = (AlertDialog)dialog;
+			
 			// 保存或更新人员
 			if (which == DialogInterface.BUTTON_POSITIVE) {
-
-				verifyNewUserName(dialog);
-			}
-
-			// 取消
-			else if (which == DialogInterface.BUTTON_NEGATIVE) {
-				destroyDialog(dialog);
+				String _userName = edTxt_userName.getText().toString().trim();
+				if(validateUserName(_userName)){
+					//如果校验通过，1、保存用户，
+					User _user = new User(_userName,User.USER_STATE_ENABLE,new Date());
+					mUserBusiness.addUser(_user);
+					//2、关闭dialog
+					setAlertDialogClosable(_dialog, true);
+					
+					//3、通知UserListView重新调用Adapter里的方法(getCount...)
+					ArrayList<User> _users = mUserBusiness.queryAllUsers();
+					mUserListAdapter.bindData(_users);
+					mUserListAdapter.notifyDataSetInvalidated();
+				}else {
+					setAlertDialogClosable(_dialog, false);
+				}
+			}else if (which == DialogInterface.BUTTON_NEGATIVE) {
+				setAlertDialogClosable(_dialog, true);
 			}
 		}
 	}

@@ -27,7 +27,7 @@ public class UserBusiness extends BaseBusiness {
 	/**
 	 * 查看已启用人员
 	 */
-	public ArrayList<User> queryAllUsers(){
+	public ArrayList<User> queryAvailableUsers(){
 		String _whereSql = "WHERE state=1";
 		return mUserDal.query(_whereSql);
 	}
@@ -35,9 +35,18 @@ public class UserBusiness extends BaseBusiness {
 	/**
 	 * 查看所有人员
 	 */
-	public ArrayList<User> queryUsers(){
-		String _whereSql = "WHERE state=1";
-		return mUserDal.query(_whereSql);
+	public ArrayList<User> queryAllUsers(){
+		return mUserDal.query(null);
+	}
+	
+	/**
+	 * 查看用户名是否已存在
+	 */
+	public boolean checkNameIfExists(String name){
+		String _whereSql = "WHERE name='" + name + "'";
+		ArrayList<User> _users = mUserDal.query(_whereSql);
+		
+		return _users.size() > 0;
 	}
 	
 	/**

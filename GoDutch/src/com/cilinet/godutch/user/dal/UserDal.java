@@ -2,7 +2,6 @@ package com.cilinet.godutch.user.dal;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -50,6 +49,7 @@ public class UserDal extends BaseDal<User> implements SQLiteTableOpenHelper{
 		
 		return _result > -1;
 	}
+	
 	
 	@Override
 	protected ContentValues createContValsByEnity(User entity) {

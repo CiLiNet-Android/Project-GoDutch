@@ -1,6 +1,10 @@
 package com.cilinet.godutch.framework.activity;
 
+import java.lang.reflect.Field;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,6 +47,20 @@ public class BaseActivity extends Activity {
 		super.startActivity(_intent);
 	}
 	
+	/**
+	 * 保持Dialog不自动关闭
+	 * @param dialog
+	 */
+	protected void setAlertDialogClosable(AlertDialog dialog,boolean closable) {
+		try {
+			Field field = dialog.getClass().getSuperclass()
+					.getDeclaredField("mShowing");
+			field.setAccessible(true);
+			field.set(dialog, closable);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 加载布局文件

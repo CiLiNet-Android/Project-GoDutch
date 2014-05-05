@@ -17,5 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imgV_userImg" />
+    
+    <TextView 
+        android:id="@+id/txtV_userState"
+        style="@style/CommonListViewItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

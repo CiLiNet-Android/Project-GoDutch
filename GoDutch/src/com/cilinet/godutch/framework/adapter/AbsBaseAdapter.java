@@ -48,4 +48,7 @@ public abstract class AbsBaseAdapter<T> extends android.widget.BaseAdapter {
 		return mContext;
 	}
 
+	public void bindData(ArrayList<T> boundData){
+		mBoundData = boundData;
+	}
 }
