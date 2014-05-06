@@ -62,5 +62,12 @@ public class UserBusiness extends BaseBusiness {
 	public boolean enableUser(int userId){
 		return mUserDal.updateStateById(userId, 1);
 	}
+	
+	/**
+	 * 修改人员
+	 */
+	public boolean updateUser(User user){
+		return mUserDal.update(user);
+	}
 
 }

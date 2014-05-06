@@ -13,6 +13,8 @@
     <string name="DialogTitleUser">%s人员</string>
     <string name="TitleAdd">新建</string>
     <string name="TitleEdit">修改</string>
+    <string name="TitleUserEnable">启用</string>
+    <string name="TitleUserDisable">禁用</string>
     <string name="ButtonTextSave">保存</string>
     <string name="ButtonTextCancel">取消</string>
     <string name="ButtonTextYes">是</string>
@@ -20,13 +22,21 @@
     <string name="ButtonTextBack">返回</string>
  
     <string name="TipsAddSucceed">保存成功</string>
+    <string name="TipsUpdateSuccessed">修改成功</string>
     <string name="TipsAddFail">保存失败</string>
     <string name="TipsDeleteFail">删除失败</string>
+    <string name="TipsOperateFailed">操作失败</string>
     <string name="MenuTextEdit">修改</string>
+    <string name="MenuTextDisable">禁用</string>
+    <string name="MenuTextEnable">启用</string>
     <string name="MenuTextDelete">删除</string>
     <string name="DialogTitleDelete">删除提示</string>
     <string name="DialogMessageUserDelete">你确定要删除%s用户吗?</string>
+    <string name="DialogMessageUserEnable">你确定要启用%s用户吗?</string>
+    <string name="DialogMessageUserDisable">你确定要禁用%s用户吗?</string>
     <string name="DeleteSuccessed">删除成功</string>
+    <string name="UserEnableSuccessed">启用成功</string>
+    <string name="UserDisableSuccessed">禁用成功</string>
     <string name="DialogTitleAccountBook">%s账本</string>
     
    
