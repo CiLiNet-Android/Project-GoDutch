@@ -59,58 +59,56 @@ public class UserActivity extends FrameActivity implements
 		ArrayList<User> _boundData = mUserBusiness.queryAllUsers();
 		mUserListAdapter = new UserListAdapter(_boundData, this);
 		listV_user.setAdapter(mUserListAdapter);
-		//给ListView绑定ContextMenu
+		// 给ListView绑定ContextMenu
 		registerForContextMenu(listV_user);
-		
+
 		getTopBarView().setTitle(
 				getString(R.string.appGridTextUserManage) + "("
 						+ String.valueOf(_boundData.size()) + ")");
 	}
-	
+
 	private User mSelectedUser;
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		//获得用户长按的条目的位置
-		AdapterView.AdapterContextMenuInfo _menuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
-		//根据位置，过得该位置上的数据
-		mSelectedUser = (User)mUserListAdapter.getItem(_menuInfo.position);
-		//弹出ContextMenu
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
+		// 获得用户长按的条目的位置
+		AdapterView.AdapterContextMenuInfo _menuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		// 根据位置，过得该位置上的数据
+		mSelectedUser = (User) mUserListAdapter.getItem(_menuInfo.position);
+		// 弹出ContextMenu
 		menu.setHeaderIcon(R.drawable.user_small_icon);
 		menu.setHeaderTitle(mSelectedUser.name);
-		
+
 		menu.add(0, 1, 0, R.string.MenuTextEdit);
-		if(mSelectedUser.state == User.USER_STATE_ENABLE){
+		if (mSelectedUser.state == User.USER_STATE_ENABLE) {
 			menu.add(0, 2, 0, R.string.MenuTextDisable);
-		}else if(mSelectedUser.state == User.USER_STATE_DISABLE){
+		} else if (mSelectedUser.state == User.USER_STATE_DISABLE) {
 			menu.add(0, 3, 0, R.string.MenuTextEnable);
 		}
-		
+
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
-	
-	
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		int _itemId = item.getItemId();
-		switch(_itemId){
-		case 1: 
+		switch (_itemId) {
+		// 修改人员
+		case 1:
 			showUpdateUserDialog(mSelectedUser);
 			break;
-		//禁用人员
+		// 禁用人员
 		case 2:
 			showDisableUserDialog(mSelectedUser);
 			break;
-		//启用人员
+		// 启用人员
 		case 3:
 			showEnableUserDialog(mSelectedUser);
 			break;
-		default: 
+		default:
 			break;
 		}
-		
+
 		return super.onContextItemSelected(item);
 	}
 
@@ -131,64 +129,78 @@ public class UserActivity extends FrameActivity implements
 			mUser = user;
 			this.edTxt_userName = edTxt_userName;
 		}
-		
+
 		/**
 		 * Dialog的点击事件
 		 */
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			AlertDialog _dialog = (AlertDialog)dialog;
-			
+			AlertDialog _dialog = (AlertDialog) dialog;
+
 			// 保存或更新人员
 			if (which == DialogInterface.BUTTON_POSITIVE) {
 				String _userName = edTxt_userName.getText().toString().trim();
+
 				
+				//满足正则表达式后，在数据表中查看输入的用户名是否已存在，如果没有重复则继续下次校验，
+				//如果输入的用户名已存在，那么判断下输入的用户名是否跟当前所要修改的用户名相同，如果相同，则修改，
+				//否则跟其他Item的用户名相同就提示“该用户名已存在”
 				boolean _validateResult = true;
-				//用户名只能由英文、中文和数字组成......
-				if(!RegexTools.isChineseEnglishNum(_userName)){
+				// 用户名只能由英文、中文和数字组成......
+				if (!RegexTools.isChineseEnglishNum(_userName)) {
 					showToast("用户名只能由英文、中文和数字组成......");
 					_validateResult = false;
-				}
-				
-				//如果一次校验通过
-				if(_validateResult && null != mUser){
-					mUser.name = _userName;
-					if(mUserBusiness.updateUser(mUser)){
-						showToast(R.string.TipsUpdateSuccessed);
-					}else {
-						showToast(R.string.TipsOperateFailed);
+				} else if( null != mUser){//用来判断是新建人员的Dialog还是修改人员的Diaglog--> null != mUser是修改人员，null == mUser是新建人员
+					if (mUserBusiness.checkNameIfExists(_userName)) {
+						if (!mUser.name.equals(_userName)) {
+							showToast("该用户名已存在");
+							_validateResult = false;
+						}
 					}
-				}
-				
-				//用户名重复则提示“该用户名已存在...”
-				if(mUser == null && mUserBusiness.checkNameIfExists(_userName)){
-					showToast("该用户名已存在...");
-					_validateResult = false;
-				}
-				
-				//如果两次校验通过，并且User还不存在
-				if(_validateResult && null == mUser){
-					mUser = new User(_userName,User.USER_STATE_ENABLE,new Date());
-					if(mUserBusiness.addUser(mUser)){
-						showToast(R.string.TipsAddSucceed);
-					}else {
+				}	
+
+				// 如果一次校验通过
+				//判断修改用户名是否成功
+				if (_validateResult && null != mUser) {
+					mUser.name = _userName;
+					if (mUserBusiness.updateUser(mUser)) {
+						showToast(R.string.TipsUpdateSuccessed);
+					} else {
 						showToast(R.string.TipsOperateFailed);
 					}
 				}
 
-				//2、关闭dialog
+				// 用户名重复则提示“该用户名已存在...”
+				if (mUser == null && mUserBusiness.checkNameIfExists(_userName)) {
+					showToast("该用户名已存在...");
+					_validateResult = false;
+				}
+
+				// 如果两次校验通过，并且User还不存在
+				if (_validateResult && null == mUser) {
+					mUser = new User(_userName, User.USER_STATE_ENABLE,
+							new Date());
+					if (mUserBusiness.addUser(mUser)) {
+						showToast(R.string.TipsAddSucceed);
+					} else {
+						showToast(R.string.TipsOperateFailed);
+					}
+				}
+
+				// 2、关闭dialog
 				setAlertDialogClosable(_dialog, true);
-				
-				//3、通知UserListView重新调用Adapter里的方法(getCount...)
+
+				// 3、通知UserListView重新调用Adapter里的方法(getCount...)
 				ArrayList<User> _users = mUserBusiness.queryAllUsers();
 				mUserListAdapter.bindData(_users);
 				mUserListAdapter.notifyDataSetInvalidated();
-			}else if (which == DialogInterface.BUTTON_NEGATIVE) {
+			} else if (which == DialogInterface.BUTTON_NEGATIVE) {
 				setAlertDialogClosable(_dialog, true);
 			}
 		}
 	}
 
+	//滑动菜单的新建人员Dialog
 	private void showAddUserDialog() {
 		View _dialogView = getLayoutInflater().inflate(
 				R.layout.dialog_person_addoredit, null);
@@ -201,24 +213,26 @@ public class UserActivity extends FrameActivity implements
 						getString(R.string.TitleAdd)))
 				.setIcon(R.drawable.user_big_icon)
 				.setView(_dialogView)
-				.setPositiveButton(
-						getString(R.string.ButtonTextSave),
-						new OnUserAddOrUpdateDialogClickListener(null,
-								edTxt_userName))
+				.setPositiveButton(getString(R.string.ButtonTextSave),new OnUserAddOrUpdateDialogClickListener(null,edTxt_userName))
 				.setNegativeButton(
 						getString(R.string.ButtonTextCancel),
 						new OnUserAddOrUpdateDialogClickListener(null,
 								edTxt_userName)).show();
 	}
 
+	//修改Dialog
 	private void showUpdateUserDialog(User user) {
-		View _dialogView = getLayoutInflater().inflate(R.layout.dialog_person_addoredit, null);
-		
-		EditText edTxt_userName = (EditText) _dialogView.findViewById(R.id.edTxt_userName);
+		View _dialogView = getLayoutInflater().inflate(
+				R.layout.dialog_person_addoredit, null);
+
+		EditText edTxt_userName = (EditText) _dialogView
+				.findViewById(R.id.edTxt_userName);
 		edTxt_userName.setText(user.name);
 
 		AlertDialog.Builder _builder = new AlertDialog.Builder(this);
-		_builder.setTitle(getString(R.string.DialogTitleUser,getString(R.string.TitleEdit)))
+		_builder.setTitle(
+				getString(R.string.DialogTitleUser,
+						getString(R.string.TitleEdit)))
 				.setIcon(R.drawable.user_big_icon)
 				.setView(_dialogView)
 				.setPositiveButton(
@@ -228,53 +242,59 @@ public class UserActivity extends FrameActivity implements
 				.setNegativeButton(
 						getString(R.string.ButtonTextCancel),
 						new OnUserAddOrUpdateDialogClickListener(user,
-								edTxt_userName))
-				.show();
+								edTxt_userName)).show();
 	}
-	
-	private void showEnableUserDialog(final User user){
+
+	//启用Dialog
+	private void showEnableUserDialog(final User user) {
 		AlertDialog.Builder _builder = new AlertDialog.Builder(this);
-		_builder.setTitle(getString(R.string.DialogTitleUser, getString(R.string.TitleUserEnable)))
+		_builder.setTitle(getString(R.string.DialogTitleUser,getString(R.string.TitleUserEnable)))
 				.setMessage(getString(R.string.DialogMessageUserEnable, user.name))
-				.setPositiveButton(R.string.ButtonTextYes, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						boolean _successed = mUserBusiness.enableUser(user.id);
-						if(_successed){
-							showToast(R.string.UserEnableSuccessed);
-							
-							ArrayList<User> _users = mUserBusiness.queryAllUsers();
-							mUserListAdapter.bindData(_users);
-							mUserListAdapter.notifyDataSetInvalidated();
-						}else {
-							showToast(R.string.TipsOperateFailed);
-						}
-					}
-				})
+				.setPositiveButton(R.string.ButtonTextYes,new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,int which) {
+								boolean _successed = mUserBusiness.enableUser(user.id);
+								if (_successed) {showToast(R.string.UserEnableSuccessed);
+
+									ArrayList<User> _users = mUserBusiness.queryAllUsers();
+									mUserListAdapter.bindData(_users);
+									mUserListAdapter.notifyDataSetInvalidated();
+								} else {
+									showToast(R.string.TipsOperateFailed);
+								}
+							}
+						})
 				.setNegativeButton(R.string.ButtonTextNo, null)
 				.show();
 	}
-	
-	private void showDisableUserDialog(final User user){
+
+	//禁用Dialog
+	private void showDisableUserDialog(final User user) {
 		AlertDialog.Builder _builder = new AlertDialog.Builder(this);
-		_builder.setTitle(getString(R.string.DialogTitleUser, getString(R.string.TitleUserDisable)))
-				.setMessage(getString(R.string.DialogMessageUserDisable, user.name))
-				.setPositiveButton(R.string.ButtonTextYes, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						boolean _successed = mUserBusiness.disableUser(user.id);
-						if(_successed){
-							showToast(R.string.UserDisableSuccessed);
-							
-							ArrayList<User> _users = mUserBusiness.queryAllUsers();
-							mUserListAdapter.bindData(_users);
-							mUserListAdapter.notifyDataSetInvalidated();
-						}else {
-							showToast(R.string.TipsOperateFailed);
-						}
-					}
-				})
-				.setNegativeButton(R.string.ButtonTextNo, null)
+		_builder.setTitle(
+				getString(R.string.DialogTitleUser,
+						getString(R.string.TitleUserDisable)))
+				.setMessage(
+						getString(R.string.DialogMessageUserDisable, user.name))
+				.setPositiveButton(R.string.ButtonTextYes,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								boolean _successed = mUserBusiness
+										.disableUser(user.id);
+								if (_successed) {
+									showToast(R.string.UserDisableSuccessed);
+
+									ArrayList<User> _users = mUserBusiness
+											.queryAllUsers();
+									mUserListAdapter.bindData(_users);
+									mUserListAdapter.notifyDataSetInvalidated();
+								} else {
+									showToast(R.string.TipsOperateFailed);
+								}
+							}
+						}).setNegativeButton(R.string.ButtonTextNo, null)
 				.show();
 	}
 

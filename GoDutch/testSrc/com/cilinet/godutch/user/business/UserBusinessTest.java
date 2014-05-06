@@ -14,7 +14,7 @@ import com.cilinet.godutch.user.entity.User;
 public class UserBusinessTest extends AndroidTestCase {
 	
 	private static final String TAG = "UserBusinessTest";
-	
+	 
 	public void testAddUser() {
 		Context _context = getContext();
 		UserBusiness _userBusiness = new UserBusiness(_context);
