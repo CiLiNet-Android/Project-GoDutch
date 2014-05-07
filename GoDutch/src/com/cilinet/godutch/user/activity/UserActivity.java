@@ -148,31 +148,46 @@ public class UserActivity extends FrameActivity implements
 				boolean _validateResult = true;
 				// 用户名只能由英文、中文和数字组成......
 				if (!RegexTools.isChineseEnglishNum(_userName)) {
-					showToast("用户名只能由英文、中文和数字组成......");
+					showToast(getString(R.string.CheckDataTextChineseEnglishNum, getString(R.string.HintUserName)));
 					_validateResult = false;
-				} else if( null != mUser){//用来判断是新建人员的Dialog还是修改人员的Diaglog--> null != mUser是修改人员，null == mUser是新建人员
-					if (mUserBusiness.checkNameIfExists(_userName)) {
-						if (!mUser.name.equals(_userName)) {
-							showToast("该用户名已存在");
-							_validateResult = false;
-						}
-					}
-				}	
+				} 
 
 				// 如果一次校验通过
 				//判断修改用户名是否成功
 				if (_validateResult && null != mUser) {
-					mUser.name = _userName;
-					if (mUserBusiness.updateUser(mUser)) {
-						showToast(R.string.TipsUpdateSuccessed);
-					} else {
-						showToast(R.string.TipsOperateFailed);
+					if(mUser.name.equals(_userName)){
+						if (mUserBusiness.updateUser(mUser)) {
+							showToast(R.string.TipsUpdateSuccessed);
+							
+							// 3、通知UserListView重新调用Adapter里的方法(getCount...)
+							ArrayList<User> _users = mUserBusiness.queryAllUsers();
+							mUserListAdapter.bindData(_users);
+							mUserListAdapter.notifyDataSetInvalidated();
+						} else {
+							showToast(R.string.TipsOperateFailed);
+						}
+					}else{
+						if(mUserBusiness.checkNameIfExists(_userName)){
+							showToast(getString(R.string.CheckDataTextUserExist));
+							_validateResult = false;
+						}else {
+							if (mUserBusiness.updateUser(mUser)) {
+								showToast(R.string.TipsUpdateSuccessed);
+								// 3、通知UserListView重新调用Adapter里的方法(getCount...)
+								ArrayList<User> _users = mUserBusiness.queryAllUsers();
+								mUserListAdapter.bindData(_users);
+								mUserListAdapter.notifyDataSetInvalidated();
+							} else {
+								showToast(R.string.TipsOperateFailed);
+							}
+						}
 					}
+					
 				}
 
 				// 用户名重复则提示“该用户名已存在...”
 				if (mUser == null && mUserBusiness.checkNameIfExists(_userName)) {
-					showToast("该用户名已存在...");
+					showToast(getString(R.string.CheckDataTextUserExist));
 					_validateResult = false;
 				}
 
@@ -182,18 +197,23 @@ public class UserActivity extends FrameActivity implements
 							new Date());
 					if (mUserBusiness.addUser(mUser)) {
 						showToast(R.string.TipsAddSucceed);
+						
+						// 3、通知UserListView重新调用Adapter里的方法(getCount...)
+						ArrayList<User> _users = mUserBusiness.queryAllUsers();
+						mUserListAdapter.bindData(_users);
+						mUserListAdapter.notifyDataSetInvalidated();
 					} else {
 						showToast(R.string.TipsOperateFailed);
 					}
 				}
 
 				// 2、关闭dialog
-				setAlertDialogClosable(_dialog, true);
-
-				// 3、通知UserListView重新调用Adapter里的方法(getCount...)
-				ArrayList<User> _users = mUserBusiness.queryAllUsers();
-				mUserListAdapter.bindData(_users);
-				mUserListAdapter.notifyDataSetInvalidated();
+				if(_validateResult){
+					setAlertDialogClosable(_dialog, true);
+				}else {
+					setAlertDialogClosable(_dialog, false);
+				}
+				
 			} else if (which == DialogInterface.BUTTON_NEGATIVE) {
 				setAlertDialogClosable(_dialog, true);
 			}
@@ -298,4 +318,5 @@ public class UserActivity extends FrameActivity implements
 				.show();
 	}
 
+	
 }
