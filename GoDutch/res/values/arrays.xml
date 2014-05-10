@@ -7,11 +7,6 @@
         <item>王五</item>
         <item>赵六</item>
     </string-array>
-    <string-array name="SQLiteDALClassName">
-        <item>com.cilinet.godutch.user.dal.UserDal</item>
-        <item>com.cilinet.godutch.category.dal.CategoryDal</item>
-    </string-array>
-    
     <string-array name="PayoutType">
         <item>均分</item>
         <item>借贷</item>
@@ -56,6 +51,11 @@
     <string-array name="SlideMenuStatistics">
         <item>切换账本</item>
         <item>导出表格</item>
+    </string-array>
+    
+    <string-array name="SQLiteDALClassName">
+        <item>com.cilinet.godutch.user.dal.UserDal</item>
+        <item>com.cilinet.godutch.category.dal.CategoryDal</item>
     </string-array>
 
 </resources>
