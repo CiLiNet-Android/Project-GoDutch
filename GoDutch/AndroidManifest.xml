@@ -31,6 +31,9 @@
         <!-- 人员管理 -->
         <activity android:name="com.cilinet.godutch.user.activity.UserActivity" />
         
+        <!-- 类别管理 -->
+        <activity android:name="com.cilinet.godutch.category.activity.CategoryActivity" />
+        
     </application>
 
 </manifest>

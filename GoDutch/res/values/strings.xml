@@ -107,5 +107,7 @@
     
     <string name="StatisticsProgressDialogTitle">统计</string>
 	<string name="StatisticsProgressDialogWaiting">正在统计中，请稍候...</string>
+	
+	<string name="ActivityCenterItemCategory">类别</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cilinet.godutch.R;
+import com.cilinet.godutch.category.activity.CategoryActivity;
 import com.cilinet.godutch.framework.activity.FrameActivity;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView.SlideMenuItem;
@@ -76,10 +77,15 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 				
 				switch(msg.what){
 					//人员管理
-					case USER_MANAGE: {
+					case USER_MANAGE: 
 						_mainActivity.startActivity(UserActivity.class);
 						break;
-					}
+						
+					//类别管理
+					case CATEGORY_MANAGE:
+						_mainActivity.startActivity(CategoryActivity.class);
+						break;
+					
 					default: {
 						break;
 					}
@@ -102,7 +108,8 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 			}
 			//类别管理
 			case R.string.appGridTextCategoryManage: {
-	
+				mMainHandler.sendEmptyMessage(CATEGORY_MANAGE);
+				break;
 			}
 			default: {
 				break;
