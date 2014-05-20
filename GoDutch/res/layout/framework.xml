@@ -3,13 +3,22 @@
     android:id="@+id/lyot_framework"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_main">
+    android:background="@drawable/bg_main"
+    android:gravity="bottom" >
     
     <!-- 引入顶部区域 -->
     <include layout="@layout/framework_top" android:id="@+id/framework_top"/>
     
     <!-- 引入底部 -->
     <include layout="@layout/framework_bottom" android:id="@+id/framework_bottom"/>
+    
+    <include
+        android:id="@+id/framework_bottom_btn"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/framework_botm_save" />
     
     <!-- 中部 -->
     <FrameLayout 

@@ -17,10 +17,13 @@ import com.cilinet.godutch.framework.view.BotmSlideMenuView.SlideMenuItem;
 import com.cilinet.godutch.framework.view.TopBarView;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapter;
 import com.cilinet.godutch.main.adapter.MainGrdVAdapterItem;
+import com.cilinet.godutch.recordconsumption.activity.RecordConsumptionActivity;
 import com.cilinet.godutch.user.activity.UserActivity;
 
-public class MainActivity extends FrameActivity implements AdapterView.OnItemClickListener,BotmSlideMenuView.OnSlideMenuItemClickListener{
-	
+public class MainActivity extends FrameActivity implements
+		AdapterView.OnItemClickListener,
+		BotmSlideMenuView.OnSlideMenuItemClickListener {
+
 	private GridView grdV_main;
 
 	@Override
@@ -28,33 +31,30 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 		super.onCreate(savedInstanceState);
 
 		appendCenterView(R.layout.activity_main);
-		
+
 		bindSlideMenuItems(R.array.SlideMenuActivityMain);
 		bindSlideMenuItemsClickListener(this);
-		
+
 		init();
 	}
 
-	
 	private void init() {
 		initView();
 	}
 
-
 	private void initView() {
-		//顶部
+		// 顶部
 		TopBarView _topBarView = getTopBarView();
 		_topBarView.setTitle(getString(R.string.WelcomeInfo));
 		_topBarView.hideBackBtn();
-		
-		//中部
-		grdV_main = (GridView)findViewById(R.id.grdV_main);
+
+		// 中部
+		grdV_main = (GridView) findViewById(R.id.grdV_main);
 		grdV_main.setAdapter(new MainGrdVAdapter(this));
 		grdV_main.setOnItemClickListener(this);
-		
-		//底部
-	}
 
+		// 底部
+	}
 
 	public static final int USER_MANAGE = 0;
 	public static final int ACCOUNT_BOOK_MANAGE = 1;
@@ -62,69 +62,78 @@ public class MainActivity extends FrameActivity implements AdapterView.OnItemCli
 	public static final int PAYOUT_ADD = 3;
 	public static final int PAYOUT_MANAGE = 4;
 	public static final int PAYOUT_STATISTICS_MANAGE = 5;
-	
+
 	private static class MainHandler extends Handler {
 		private WeakReference<MainActivity> mWeakReference;
-		
-		public MainHandler(MainActivity mainActivity){
+
+		public MainHandler(MainActivity mainActivity) {
 			mWeakReference = new WeakReference<MainActivity>(mainActivity);
 		}
-		
+
 		@Override
 		public void handleMessage(Message msg) {
 			MainActivity _mainActivity = mWeakReference.get();
-			if(null != _mainActivity){
+			if (null != _mainActivity) {
 				super.handleMessage(msg);
-				
-				switch(msg.what){
-					//人员管理
-					case USER_MANAGE: 
-						_mainActivity.startActivity(UserActivity.class);
-						break;
-						
-					//类别管理
-					case CATEGORY_MANAGE:
-						_mainActivity.startActivity(CategoryActivity.class);
-						break;
-					
-					default: {
-						break;
-					}
+
+				switch (msg.what) {
+				// 人员管理
+				case USER_MANAGE:
+					_mainActivity.startActivity(UserActivity.class);
+					break;
+
+				// 类别管理
+				case CATEGORY_MANAGE:
+					_mainActivity.startActivity(CategoryActivity.class);
+					break;
+
+				//记录消费
+				case PAYOUT_ADD:
+					_mainActivity.startActivity(RecordConsumptionActivity.class);
+					break;
+				default: {
+					break;
+				}
 				}
 			}
 		}
-		
+
 	}
-	
+
 	private MainHandler mMainHandler = new MainHandler(this);
-	
+
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		MainGrdVAdapterItem _mainGrdVAdapterItem = (MainGrdVAdapterItem)parent.getAdapter().getItem(position);
-		switch(_mainGrdVAdapterItem.nameResId){
-			//如果用户点击了人员管理
-			case R.string.appGridTextUserManage: {
-				mMainHandler.sendEmptyMessage(USER_MANAGE);
-				break;
-			}
-			//类别管理
-			case R.string.appGridTextCategoryManage: {
-				mMainHandler.sendEmptyMessage(CATEGORY_MANAGE);
-				break;
-			}
-			default: {
-				break;
-			}
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MainGrdVAdapterItem _mainGrdVAdapterItem = (MainGrdVAdapterItem) parent
+				.getAdapter().getItem(position);
+		switch (_mainGrdVAdapterItem.nameResId) {
+		// 如果用户点击了人员管理
+		case R.string.appGridTextUserManage: {
+			mMainHandler.sendEmptyMessage(USER_MANAGE);
+			break;
+		}
+		// 类别管理
+		case R.string.appGridTextCategoryManage: {
+			mMainHandler.sendEmptyMessage(CATEGORY_MANAGE);
+			break;
+		}
+		//记录消费
+		case R.string.appGridTextPayoutAdd:
+			mMainHandler.sendEmptyMessage(PAYOUT_ADD);
+			break;
+		default: {
+			break;
+		}
 		}
 	}
 
-
 	@Override
 	public void onSlideMenuItemClick(View view, SlideMenuItem slideMenuItem) {
-		
+
 		showToast(slideMenuItem.title);
-		//getBotmSlideMenuView().slide();
-		
+		// getBotmSlideMenuView().slide();
+
 	}
 
 }
