@@ -8,16 +8,17 @@ import com.cilinet.godutch.category.dal.CategoryDal;
 import com.cilinet.godutch.category.entity.Category;
 import com.cilinet.godutch.framework.business.BaseBusiness;
 
-public class cateGoryBusiness extends BaseBusiness{
+public class CategoryBusiness extends BaseBusiness{
 	
 	private CategoryDal  categoryDal;
 
-	public cateGoryBusiness(Context context) {
+	public CategoryBusiness(Context context) {
 		super(context);
+		categoryDal = new CategoryDal(getContext());
 	}
 	
 	/** 查看类别 **/
-	private ArrayList<Category> quetyCategory(){
+	public ArrayList<Category> quetyCategory(){
 		return categoryDal.query(null);
 	}
 

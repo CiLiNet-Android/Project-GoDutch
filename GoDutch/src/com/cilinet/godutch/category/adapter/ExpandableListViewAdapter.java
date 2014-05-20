@@ -15,10 +15,10 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	
 	private Context context;
 	
-	private ArrayList<Group_item> groupItemList;
+	private ArrayList<GroupItem> groupItemList;
 	
 	
-	public ExpandableListViewAdapter(Context context,ArrayList<Group_item> groupList){
+	public ExpandableListViewAdapter(Context context,ArrayList<GroupItem> groupList){
 		this.context = context;
 		this.groupItemList = groupList;
 	}
@@ -75,9 +75,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		}else{
 			_groupHolder = (GroupHolder) view.getTag();
 		}
-		Group_item _group_item = (Group_item) getGroup(groupPosition);
+		GroupItem _group_item = (GroupItem) getGroup(groupPosition);
 		_groupHolder.name.setText(_group_item.name);
-		_groupHolder.cateGory.setText(_group_item.cateGory);
+		_groupHolder.cateGory.setText(_group_item.category);
 		
 		return view;
 	}

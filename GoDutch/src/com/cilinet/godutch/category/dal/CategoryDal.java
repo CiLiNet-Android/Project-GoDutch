@@ -1,6 +1,7 @@
 package com.cilinet.godutch.category.dal;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -94,6 +95,9 @@ public class CategoryDal extends BaseDal<Category> implements SQLiteTableOpenHel
 		String[] _categoryNames = getContext().getResources().getStringArray(R.array.InitDefaultCategoryName);
 		for(String _categoryName : _categoryNames){
 			_category.name = _categoryName;
+			_category.createDate = new Date();
+			_category.state = 1;
+			//_category.id = 0;
 			
 			ContentValues _contentValues = createContValsByEnity(_category);
 			long _newCategoryId = db.insert(TABLE.NAME, null, _contentValues);
@@ -111,7 +115,24 @@ public class CategoryDal extends BaseDal<Category> implements SQLiteTableOpenHel
 
 	@Override
 	protected ArrayList<Category> cursorToList(Cursor cursor) {
-		return null;
+		
+		ArrayList<Category> _categoryList = new ArrayList<Category>();
+		
+		while(cursor.moveToNext()){
+			
+			Category _category = new Category();
+			_category.id = cursor.getInt(cursor.getColumnIndex(TABLE.COLUMN_ID));
+			_category.name = cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_NAME));
+			_category.typeFlag = cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_TYPEFLAG));
+			_category.parentId = cursor.getInt(cursor.getColumnIndex(TABLE.COLUMN_PARENTID));
+			_category.path = cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_PATH));
+			_category.state = cursor.getInt(cursor.getColumnIndex(TABLE.COLUMN_STATE));
+			_category.createDate = parseDate(cursor.getString(cursor.getColumnIndex(TABLE.COLUMN_CREATEDATE)));
+			
+			_categoryList.add(_category);
+		}
+		
+		return _categoryList;
 	}
 
 }

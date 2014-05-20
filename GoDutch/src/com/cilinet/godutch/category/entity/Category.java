@@ -18,5 +18,9 @@ public class Category extends BaseEntity {
 	/** 类别路径(面包屑) **/
 	public String path;
 	
+	public String toString(){
+		return "id:" + id + "--name:" + name + "--typeFlag:"+ typeFlag + "--parentId:" + parentId + "--path:" + path + "--state:" + state + "--createDate:" + createDate;
+	}
+	
 	
 }
