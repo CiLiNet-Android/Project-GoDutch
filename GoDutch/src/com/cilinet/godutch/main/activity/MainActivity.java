@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cilinet.godutch.R;
+import com.cilinet.godutch.accountbook.activity.AccountBookActivity;
 import com.cilinet.godutch.category.activity.CategoryActivity;
 import com.cilinet.godutch.framework.activity.FrameActivity;
 import com.cilinet.godutch.framework.view.BotmSlideMenuView;
@@ -91,9 +92,15 @@ public class MainActivity extends FrameActivity implements
 				case PAYOUT_ADD:
 					_mainActivity.startActivity(RecordConsumptionActivity.class);
 					break;
-				default: {
+					
+				//帐本管理
+				case ACCOUNT_BOOK_MANAGE:
+					_mainActivity.startActivity(AccountBookActivity.class);
 					break;
-				}
+					
+				default: 
+					break;
+				
 				}
 			}
 		}
@@ -109,22 +116,27 @@ public class MainActivity extends FrameActivity implements
 				.getAdapter().getItem(position);
 		switch (_mainGrdVAdapterItem.nameResId) {
 		// 如果用户点击了人员管理
-		case R.string.appGridTextUserManage: {
+		case R.string.appGridTextUserManage: 
 			mMainHandler.sendEmptyMessage(USER_MANAGE);
 			break;
-		}
+		
 		// 类别管理
-		case R.string.appGridTextCategoryManage: {
+		case R.string.appGridTextCategoryManage: 
 			mMainHandler.sendEmptyMessage(CATEGORY_MANAGE);
 			break;
-		}
+		
 		//记录消费
 		case R.string.appGridTextPayoutAdd:
 			mMainHandler.sendEmptyMessage(PAYOUT_ADD);
 			break;
-		default: {
+			
+		//帐本管理
+		case R.string.appGridTextAccountBookManage:
+			mMainHandler.sendEmptyMessage(ACCOUNT_BOOK_MANAGE);
+			
+		default: 
 			break;
-		}
+		
 		}
 	}
 

@@ -35,7 +35,7 @@ public class UserActivity extends FrameActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		appendCenterView(R.layout.activity_user);
+		appendCenterView(R.layout.activity_listview);
 
 		bindSlideMenuItems(R.array.SlideMenuUser);
 		bindSlideMenuItemsClickListener(this);

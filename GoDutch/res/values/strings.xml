@@ -109,5 +109,7 @@
 	<string name="StatisticsProgressDialogWaiting">正在统计中，请稍候...</string>
 	
 	<string name="ActivityCenterItemCategory">类别</string>
+	
+	<string name="DefaultAccountBook">默认帐本</string>
 
 </resources>

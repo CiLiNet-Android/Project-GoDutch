@@ -14,19 +14,14 @@ public class RecordConsumptionActivity extends FrameActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		getTopBarView().setTitle(loadString(R.string.TitleAdd) + loadString(R.string.PayoutTypeFlag));
 		
+		//设置页眉
+		getTopBarView().setTitle(loadString(R.string.TitleAdd) + loadString(R.string.PayoutTypeFlag));
+		//绑定中间区域的布局
 		appendCenterView(R.layout.activity_record_consumption);
 		
 		showBottomSaveOrCancelBtn();	
 		
-	}
-	
-	
-	//加载string文件获取值
-	private String loadString(int stringResId){	
-		return getResources().getString(stringResId);	
 	}
 	
 }

@@ -37,6 +37,8 @@
         <!-- 记录消费 -->
         <activity android:name="com.cilinet.godutch.recordconsumption.activity.RecordConsumptionActivity" />
         
+        <!-- 帐本管理 -->
+        <activity android:name="com.cilinet.godutch.accountbook.activity.AccountBookActivity" />
     </application>
 
 </manifest>

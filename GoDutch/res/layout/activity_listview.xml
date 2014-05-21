@@ -6,6 +6,6 @@
     
     <ListView 
         android:id="@+id/listV_user"
-        style="@style/CommonListView"/>"
+        style="@style/CommonListView"/>
 
 </LinearLayout>
