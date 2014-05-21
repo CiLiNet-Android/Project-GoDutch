@@ -33,6 +33,8 @@
         
         <!-- 类别管理 -->
         <activity android:name="com.cilinet.godutch.category.activity.CategoryActivity" />
+        <!-- 新建类别 -->
+        <activity android:name="com.cilinet.godutch.category.activity.NewCategoryActivity" />
         
         <!-- 记录消费 -->
         <activity android:name="com.cilinet.godutch.recordconsumption.activity.RecordConsumptionActivity" />

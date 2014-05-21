@@ -25,6 +25,9 @@ import com.cilinet.godutch.framework.view.BotmSlideMenuView.SlideMenuItem;
  */
 public class CategoryActivity extends FrameActivity implements BotmSlideMenuView.OnSlideMenuItemClickListener{
 	
+	private static final int ADD_CATEGORY = 0;
+	private static final int STATISTICS_CATEGORY = 1;
+	
 	private static final String TAG = "CategoryActivity";
 	
 	private CategoryBusiness categoryBusiness;
@@ -93,10 +96,23 @@ public class CategoryActivity extends FrameActivity implements BotmSlideMenuView
 	//底部滑动菜单的Item单击事件处理
 	@Override
 	public void onSlideMenuItemClick(View view, SlideMenuItem slideMenuItem) {
+
+		switch (slideMenuItem.id) {
 		
-		showToast(slideMenuItem.title);
-		getBotmSlideMenuView().slide();
+		case ADD_CATEGORY:
+				startActivity(NewCategoryActivity.class);
+			break;
+			
+		case STATISTICS_CATEGORY:
+				showToast(slideMenuItem.title);
+			break;
+
+		default:
+			break;
+		}
 		
+//		getBotmSlideMenuView().slide();
+	
 	}
 
 	

@@ -111,5 +111,7 @@
 	<string name="ActivityCenterItemCategory">类别</string>
 	
 	<string name="DefaultAccountBook">默认帐本</string>
+	
+	<string name="AddCategory_Spinner">== 请选择  ==</string>
 
 </resources>
